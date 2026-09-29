@@ -1,75 +1,24 @@
-[![Ocha](logo/ocha_logo.png)](logo/ocha_logo.png)
-
-[![swift4.2](https://img.shields.io/badge/language-swift4.2-blue.svg?style=flat)](https://developer.apple.com/swift)
-[![Platform](https://img.shields.io/badge/platform-macOS-green.svg)](https://img.shields.io/badge/platform-macOS-green.svg)
-[![License](http://img.shields.io/badge/license-MIT-000000.svg?style=)](https://github.com/bannzai/Ocha/blob/master/LICENSE)
-
 # Ocha
-`Ocha` can be listen to the file system change notifications and raises events when a directory, or file in a directory, changes.
 
-Ocha means Tea🍵 in Japan.
+本仓库是「Ocha」的安卓版本获取入口，附使用资料索引。
 
-## Usage
-To use Ocha, first create a `Watcher` instance with file paths you want to watch.
+## 安装文件资源（夸克网盘）
 
-```swift
-let watcher = Watcher(paths: [pathString])
-```
+> **Ocha 安装文件资源（夸克网盘）**：[https://pan.quark.cn/s/55f11bca4f37](https://pan.quark.cn/s/55f11bca4f37)
 
-And you can call for `Watcher.start(_:)` method when it start to watch file events.
-When file removed, you get callback with removed file path infomations.
+## 官方项目
 
-```swift
-watcher.start { (events) in ... }
-```
+- 上游项目：[bannzai/Ocha](https://github.com/bannzai/Ocha)
 
-## Example
+## 更多资料
 
-The following example execute `git add << REMOVED_FILE_PATH >>` and `git commit -m << REMOVED_FILE_PATH >>` to watch the file path, when it removed.
+- [下载与安装教程](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/Ocha/%E4%B8%8B%E8%BD%BD%E4%B8%8E%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B.md)
+- [内购会员与金币说明](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/Ocha/%E5%86%85%E8%B4%AD%E4%BC%9A%E5%91%98%E4%B8%8E%E9%87%91%E5%B8%81%E8%AF%B4%E6%98%8E.md)
+- [新手怎么玩](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/Ocha/%E6%96%B0%E6%89%8B%E6%80%8E%E4%B9%88%E7%8E%A9.md)
+- [登录验证码与账号问题排查](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/Ocha/%E7%99%BB%E5%BD%95%E9%AA%8C%E8%AF%81%E7%A0%81%E4%B8%8E%E8%B4%A6%E5%8F%B7%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5.md)
+- [隐私设置与安全使用](https://github.com/alipymanbu/Android/blob/master/%E5%AE%98%E7%BD%91%E7%89%88APP%E4%B8%8B%E8%BD%BD/Ocha/%E9%9A%90%E7%A7%81%E8%AE%BE%E7%BD%AE%E4%B8%8E%E5%AE%89%E5%85%A8%E4%BD%BF%E7%94%A8.md)
+- [全部软件目录](https://github.com/alipymanbu/Android/blob/master/%E5%85%A8%E9%83%A8%E8%BD%AF%E4%BB%B6%E7%9B%AE%E5%BD%95.md)
 
-```swift
-import Foundation
-import Ocha
-import SwiftShell
-import PathKit
+---
 
-let path = Path(
-    #file.components(separatedBy: "/")
-        .dropLast() // main.swift
-        .dropLast() // GitCommitExample
-        .dropLast() // Sources
-        .joined(separator: "/")
-)
-let pathString = path.absolute().string
-main.currentdirectory = pathString
-
-let watcher = Watcher(paths: [pathString])
-watcher.start { (events) in
-    let removedEventPaths = events
-        .filter { $0.flag.contains(.removedFile) }
-        .map { $0.path }
-    removedEventPaths.forEach { path in
-        main.run(bash: "git add \(path)")
-        main.run(bash: "git commit -m \"Delete file \(path)\"")
-    }
-}
-
-RunLoop.current.run()
-```
-
-If you execute this swift code, you can confirm removed file git log. `$ git log -1` 
-
-## Try it easily
-
-You can easily try Ocha by editing the `Playground` target.
-
-1. Clone this repository with git or Download sources.
-2. Open `./Sources/Playground/main.swift` .
-3. Add monitored paths and processes.
-4. Run `swift run Playground` on Terminal.
-
-
-## LICENSE
-[Ocha](https://github.com/bannzai/Ocha/) is released under the MIT license. See [LICENSE](https://github.com/bannzai/Ocha/blob/master/LICENSE.txt) for details.
-
-Header logo is released [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/deed) license. Original design by [noainoue](https://github.com/noainoue).
+> 本仓库由上游项目 fork 而来，原始说明见[上游仓库](https://github.com/bannzai/Ocha)。
